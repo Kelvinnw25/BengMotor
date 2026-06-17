@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-asphalt text-ink font-body antialiased;
+  /* Tekstur halus biar background gelap nggak flat */
+  background-image:
+    radial-gradient(circle at 15% -10%, rgba(255, 45, 30, 0.12), transparent 40%),
+    radial-gradient(circle at 100% 0%, rgba(230, 177, 67, 0.08), transparent 35%);
+  background-attachment: fixed;
+}
+
+/* Garis "speed line" diagonal sebagai pembatas section */
+.speedline {
+  background-image: repeating-linear-gradient(
+    115deg,
+    theme(colors.line) 0,
+    theme(colors.line) 2px,
+    transparent 2px,
+    transparent 14px
+  );
+}
+
+/* Heading display dimiringkan dikit -> kesan kecepatan/livery */
+.headline {
+  @apply font-display font-black italic uppercase leading-[0.92] tracking-tight;
+}
+
+.eyebrow {
+  @apply font-cond font-bold uppercase tracking-[0.25em] text-xs;
+}
+
+/* Garis bawah aksen di bawah heading */
+.accent-rule {
+  height: 4px;
+  width: 56px;
+  background: linear-gradient(90deg, theme(colors.race), theme(colors.gold));
+}
+
+/* ---- Scroll reveal (pakai IntersectionObserver, lihat components/Reveal.tsx) ---- */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Aksesibilitas: hormati pengguna yang matiin animasi */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .animate-ticker {
+    animation: none !important;
+  }
+}
+
+/* Fokus keyboard yang kelihatan jelas */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid theme(colors.gold);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
